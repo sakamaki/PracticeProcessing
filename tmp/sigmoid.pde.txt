@@ -1,0 +1,32 @@
+float angle = 0.0;
+
+void setup() {
+  // fullScreen();
+  size(1000, 1000);
+  frameRate(60);
+  strokeWeight(2);
+}
+
+
+void draw() {
+  background(255);
+  // noFill();
+  fill(0);
+  drawSigmoid();
+}
+
+
+void drawSigmoid() {
+  for (float i=-6; i<8; i+=0.1) {
+    float x = map(i, -6, 7, 0, width);
+    float y = map(sigmoid(i), -6, 6, height, 0);
+    if (x < 0 || y < 0 || width < x || height < y) continue;
+    rectMode(CENTER);
+    rect(x, y, 1, 1);
+  }
+}
+
+
+float sigmoid(float x){
+  return 1.0 / (1.0 + exp(-10.0 * (x - 0.5)));
+}
