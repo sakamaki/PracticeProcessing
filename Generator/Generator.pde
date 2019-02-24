@@ -3,6 +3,8 @@ AudioIn in;
 FFT fft;
 int bands = 128;
 float scale = 50000.0;
+float diameter;
+float hue;
 
 Initializer initial;
 /*
@@ -21,7 +23,6 @@ void setup() {
   in.start();
   fft = new FFT(this, bands);
   fft.input(in);
-  // frameRate(10);
 }
 
 void draw() {
@@ -32,11 +33,10 @@ void draw() {
   float x = 0.;
   float w = width / float(bands) / 2.0;
   for (int i = 0; i < 100; i++) {
+    diameter = fft.spectrum[i] * scale;
     x += initial.interval[i] * 10.;
-    // float hue = 360 / float(100) * i;
-    float hue = map(x, 0.0, 1000.0, 100, 255);
+    hue = map(x, 0.0, 1000.0, 100, 255);
     fill(255, int(hue), 153);
-    float diameter = fft.spectrum[i] * scale;
     ellipse(
         width / 2.0 + x * w,
         height / 2.0,
